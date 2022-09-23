@@ -12,6 +12,8 @@ class RPS:
     self.user_score = 0
     self.computer_score = 0
 
+    self.choices = ['rock', 'paper', 'scissors', 'nothing']
+
   def get_prediction(self):
     ret, frame = cap.read()
     resized_frame = cv2.resize(frame, (224, 224), interpolation = cv2.INTER_AREA)
@@ -19,39 +21,33 @@ class RPS:
     normalized_image = (image_np.astype(np.float32) / 127.0) - 1 # Normalize the image
     data[0] = normalized_image 
     cv2.imshow('frame', frame)
-    return np.argmax(model.predict(data))
+    max_index = np.argmax(model.predict(data))
+    user_choice = self.choices[max_index]
+    print(f'User chose {user_choice}')
+    return user_choice
 
   def get_computer_choice(self):
-      return random.randint(0,2)
+      # return random.randint(0,2)
+      comp_choice = random.choice(self.choices[0:3])
+      print(f'Computer chose {comp_choice}')
+      return comp_choice
 
   def get_winner(self, comp_choice, user_choice):
-    if user_choice == 3:
-      return 2 #computer
-    if comp_choice - user_choice == -1 or comp_choice - user_choice == 2:
-      return 1 #user
-    elif comp_choice - user_choice == -2 or comp_choice - user_choice == 1:
-      return 2 #computer
+    if user_choice == 'nothing':
+      print('\nPlease do a gesture...\n')
+    elif comp_choice == user_choice:
+      return 'tie'
+    elif (comp_choice == 'rock' and user_choice == 'paper') or (comp_choice == 'paper' and user_choice == 'scissors') or (comp_choice == 'scissors' and user_choice == 'rock'):
+      return 'user'
     else:
-      return 0 #draw
+      return 'computer'
 
   def countdown(self, msgs):
     for x in msgs:
       print(x)
       time.sleep(0.7)
-    print('Shoot!')
+    print('Shoot!\n')
     time.sleep(0.2)
-
-  def print_and_return_choice(self, gesture, player):
-    if gesture == 0:
-      print(f'{player} chose rock')
-    if gesture == 1:
-      print(f'{player} chose paper')
-    if gesture == 2:
-      print(f'{player} chose scissors')
-    if gesture == 3:
-      print(f"{player} didn't do anything!")
-    return gesture
-
 
   def start_game(self):
     start_game = input('Enter "y" to start the game : ')
@@ -59,19 +55,21 @@ class RPS:
       self.game()
 
   def game(self):
-    self.countdown(['Rock', 'Paper', 'Scissors'])
-    user_gesture = self.print_and_return_choice(self.get_prediction(), 'User')
-    computer_gesture = self.print_and_return_choice(self.get_computer_choice(), 'Computer')
+    self.countdown(['\nRock', 'Paper', 'Scissors'])
+    
+    user_gesture = self.get_prediction()
+    computer_gesture = self.get_computer_choice()
+
     winner = self.get_winner(computer_gesture, user_gesture)
-    if winner == 1:
-      print('User wins!')
+    if winner == 'user':
+      print('\nUser wins!\n')
       self.user_score += 1
-    if winner == 2:
-      print('Computer wins!')
+    if winner == 'computer':
+      print('\nComputer wins!\n')
       self.computer_score += 1
-    if winner == 0:
-      print('Draw!')
-    print(f'Computer : {self.computer_score}, User : {self.user_score}')
+    if winner == 'draw':
+      print('\nDraw!\n')
+    print(f'Computer : {self.computer_score}, User : {self.user_score}\n')
 
 def play_game():
   game = RPS()
