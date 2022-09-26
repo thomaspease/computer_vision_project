@@ -1,6 +1,4 @@
-# Example Project Documentation Guideline
-
-> Include here a brief description of the project, what technologies are used etc.
+# Computer vision project - Rock paper scissors
 
 ## Milestone 2
 
@@ -43,4 +41,4 @@ def get_winner(self, comp_choice, user_choice):
       return 'computer'
 ```
 
-![Gameplay] /gameplay.png
+[Gameplay] (/gameplay.png)
