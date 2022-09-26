@@ -41,4 +41,4 @@ def get_winner(self, comp_choice, user_choice):
       return 'computer'
 ```
 
-[Gameplay] (/gameplay.png)
+! [Gameplay] (./gameplay.png)
