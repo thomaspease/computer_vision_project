@@ -1,5 +1,20 @@
 # Computer vision project - Rock paper scissors
 
+- Using a trained computer vision model, this project uses Tensorflow to detect whether Rock, Paper or Scissors is shown to the camera in real-time and with a high accuracy.
+- Uses the OpenCV library to access the webcam and play Rock Paper Scissors with the computer using the image from the camera.
+
+## Setup
+Ensure that you have Miniconda installed on your device (https://docs.conda.io/en/latest/miniconda.html). Create a project environment from the config file, and make sure that it is activated.
+
+```C
+conda env create -f environment.yml -n new-conda-environment
+
+conda activate new-conda-environment
+```
+
+To run the scraper, simply run the file `camera_rps.py`
+
+
 ## Milestone 2
 
 Using Google's 'Teachable machine' (https://teachablemachine.withgoogle.com/) I trained a model which recognises the gestures 'rock', 'paper', 'scissors' and 'nothing'. This was then downloaded for use with Tensorflow.
